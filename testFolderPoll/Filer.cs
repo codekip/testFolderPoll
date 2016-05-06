@@ -1,32 +1,78 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace testFolderPoll
 {
     public static class Filer
     {
-        public static IEnumerable<string> GetFiles(string cUsersNickDesktopNewFolder)
+
+        public static IEnumerable<string> GetFiles(string path)
         {
-            var thefiles = Directory.GetFiles(cUsersNickDesktopNewFolder).ToList();
+            List<string> thefiles = null;
 
-            var subdir = Directory.GetDirectories(cUsersNickDesktopNewFolder);
+                if (File.Exists(path))
+                {
+                    // This path is a file
+                    ProcessFile(path, ref thefiles);
 
-            foreach (var s in subdir)
-            {
-                var subdirfiles = ProcessDir(s);
-
-                thefiles.AddRange(subdirfiles);
-            }
+                }
+                else if (Directory.Exists(path))
+                {
+                    // This path is a directory
+                    ProcessDirectory(path, ref thefiles);
+                }
+                else
+                {
+                    Console.WriteLine("{0} is not a valid file or directory.", path);
+                }
+            
             return thefiles;
 
         }
 
-        private static IEnumerable<string> ProcessDir(string dir)
+        private static void ProcessDirectory(string path, ref List<string> thefiles)
         {
-            var thefiles = Directory.GetFiles(dir).ToList();
+            
+            //Process files in the directory
+            IEnumerable<string> filesindir = Directory.GetFiles(path);
+            foreach (var filename in filesindir)
+            {
+                if (!filename.Contains("~"))
+                {
+                    ProcessFile(filename, ref thefiles);
 
-            return thefiles;
+                }
+               // ProcessFile(filename, ref thefiles);
+            }
+
+            //Recurse subdirectories
+            IEnumerable<string> subdirectories = Directory.GetDirectories(path);
+            foreach (var sub in subdirectories)
+            {
+                //IEnumerable<string> filesinsubdir = Directory.GetFiles(path);
+                //foreach (var filename in filesinsubdir)
+                //{
+                //    ProcessFile(sub, ref thefiles);
+                //}
+
+                ProcessDirectory(sub, ref thefiles);
+            }
+
+        }
+
+        private static void ProcessFile(string path, ref List<string> thefiles)
+        {
+            if (thefiles == null)
+            {
+                thefiles = new List<string>();
+                thefiles.Add(path);
+            }
+            else
+            {
+                thefiles.Add(path);
+            }
+           // thefiles.Add(path);
         }
     }
 }
