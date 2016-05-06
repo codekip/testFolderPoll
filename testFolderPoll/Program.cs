@@ -9,18 +9,28 @@ namespace testFolderPoll
     {
         static void Main(string[] args)
         {
-            Stopwatch ss = new Stopwatch();
+            string textfilepath = @"C:\Users\sawe.nk\Desktop\binthese\files.txt";
+            string tdbpath = @"L:\02 Technical Database";
 
-            ss.Start();
+                Stopwatch ss = new Stopwatch();
 
-                var x = Filer.GetFiles(@"L:\02 Technical Database");
+                ss.Start();
 
-                File.WriteAllLines(@"C:\Users\sawe.nk\Desktop\binthese\files.txt", x);
+                var x = Filer.GetFiles(tdbpath);
 
-            ss.Stop();
+                File.WriteAllLines(textfilepath, x);
+                ss.Stop();
 
-            Console.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + x.Count() + " files");
-            Console.ReadLine();
+           // Debug.Print("done");
+
+                //using (StreamWriter swriter = new StreamWriter(textfilepath, true))
+                //{
+                //    swriter.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + x.Count() + " files");
+                //}
+
+
+            // Console.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + x.Count() + " files");
+            //Console.ReadLine();
         }
     }
 }
