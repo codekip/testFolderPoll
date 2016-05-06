@@ -41,21 +41,13 @@ namespace testFolderPoll
                 if (!filename.Contains("~"))
                 {
                     ProcessFile(filename, ref thefiles);
-
                 }
-               // ProcessFile(filename, ref thefiles);
             }
 
             //Recurse subdirectories
             IEnumerable<string> subdirectories = Directory.GetDirectories(path);
             foreach (var sub in subdirectories)
             {
-                //IEnumerable<string> filesinsubdir = Directory.GetFiles(path);
-                //foreach (var filename in filesinsubdir)
-                //{
-                //    ProcessFile(sub, ref thefiles);
-                //}
-
                 ProcessDirectory(sub, ref thefiles);
             }
 
@@ -72,7 +64,6 @@ namespace testFolderPoll
             {
                 thefiles.Add(path);
             }
-           // thefiles.Add(path);
         }
     }
 }

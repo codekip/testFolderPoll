@@ -12,15 +12,10 @@ namespace testFolderPoll
             Stopwatch ss = new Stopwatch();
 
             ss.Start();
-            var x = Filer.GetFiles(@"L:\02 Technical Database");
 
-            File.WriteAllLines(@"C:\Users\sawe.nk\Desktop\binthese\files.txt", x);
+                var x = Filer.GetFiles(@"L:\02 Technical Database");
 
-            //foreach (var f in x)
-            //{
-            //    Console.WriteLine(f);
-                
-            //}
+                File.WriteAllLines(@"C:\Users\sawe.nk\Desktop\binthese\files.txt", x);
 
             ss.Stop();
 
