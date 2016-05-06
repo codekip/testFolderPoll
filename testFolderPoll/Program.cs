@@ -12,25 +12,44 @@ namespace testFolderPoll
             string textfilepath = @"C:\Users\sawe.nk\Desktop\binthese\files.txt";
             string tdbpath = @"L:\02 Technical Database";
 
-                Stopwatch ss = new Stopwatch();
+            Stopwatch ss = new Stopwatch();
 
-                ss.Start();
+            ss.Start();
 
-                var x = Filer.GetFiles(tdbpath);
+            var filelist = Filer.GetFiles(tdbpath);
 
-                File.WriteAllLines(textfilepath, x);
-                ss.Stop();
+            File.WriteAllLines(textfilepath, filelist);
 
-           // Debug.Print("done");
+            var totalsize = 0;
+            foreach (var file in filelist)
+            {
+                
+                FileInfo fi = null;
+                try
+                {
+                    fi = new FileInfo(file);
+                    totalsize += (int)fi.Length/1000;
+                }
+                catch (FileNotFoundException e)
+                {
 
-                //using (StreamWriter swriter = new StreamWriter(textfilepath, true))
-                //{
-                //    swriter.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + x.Count() + " files");
-                //}
+                    Console.WriteLine(e.Message);
+                }
+
+            }
+
+            ss.Stop();
+
+            // Debug.Print("done");
+
+            //using (StreamWriter swriter = new StreamWriter(textfilepath, true))
+            //{
+            //    swriter.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + x.Count() + " files");
+            //}
 
 
-            // Console.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + x.Count() + " files");
-            //Console.ReadLine();
+            Console.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + filelist.Count() + " files" + " filesize " + totalsize);
+            Console.ReadLine();
         }
     }
 }

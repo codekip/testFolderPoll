@@ -38,10 +38,10 @@ namespace testFolderPoll
             IEnumerable<string> filesindir = Directory.GetFiles(path);
             foreach (var filename in filesindir)
             {
-                //if (!filename.Contains("~"))
-                //{
+                if (filename.Contains("~"))
+                {
                     ProcessFile(filename, ref thefiles);
-                //}
+                }
             }
 
             //Recurse subdirectories
