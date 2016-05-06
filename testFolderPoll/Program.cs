@@ -10,7 +10,7 @@ namespace testFolderPoll
         static void Main(string[] args)
         {
             string textfilepath = @"C:\Users\sawe.nk\Desktop\binthese\files.txt";
-            string tdbpath = @"L:\02 Technical Database";
+            string tdbpath = @"L:\"; // @"L:\02 Technical Database";
 
             Stopwatch ss = new Stopwatch();
 
@@ -23,7 +23,7 @@ namespace testFolderPoll
             var totalsize = 0;
             foreach (var file in filelist)
             {
-                
+                 
                 FileInfo fi = null;
                 try
                 {
@@ -42,14 +42,15 @@ namespace testFolderPoll
 
             // Debug.Print("done");
 
-            //using (StreamWriter swriter = new StreamWriter(textfilepath, true))
-            //{
-            //    swriter.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + x.Count() + " files");
-            //}
+            //can comm out this using bit
+            using (StreamWriter swriter = new StreamWriter(textfilepath, true))
+            {
+                swriter.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + filelist.Count() + " files");
+            }
 
 
-            Console.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + filelist.Count() + " files" + " filesize " + totalsize);
-            Console.ReadLine();
+            //Console.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + filelist.Count() + " files" + " filesize " + totalsize);
+            //Console.ReadLine();
         }
     }
 }

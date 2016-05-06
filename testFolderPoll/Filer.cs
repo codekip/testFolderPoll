@@ -7,9 +7,10 @@ namespace testFolderPoll
     public static class Filer
     {
 
-        public static IEnumerable<string> GetFiles(string path)
+        public static IEnumerable<string> GetFiles(string path, string filefilter = "")
         {
             List<string> thefiles = null;
+            string filter = filefilter;
 
                 if (File.Exists(path))
                 {
@@ -19,8 +20,8 @@ namespace testFolderPoll
                 }
                 else if (Directory.Exists(path))
                 {
-                    // This path is a directory
-                    ProcessDirectory(path, ref thefiles);
+                // This path is a directory
+                ProcessDirectory(path, ref thefiles, filefilter);
                 }
                 else
                 {
@@ -31,14 +32,21 @@ namespace testFolderPoll
 
         }
 
-        private static void ProcessDirectory(string path, ref List<string> thefiles)
+        private static void ProcessDirectory(string path, ref List<string> thefiles,string filefilter)
         {
             
             //Process files in the directory
             IEnumerable<string> filesindir = Directory.GetFiles(path);
             foreach (var filename in filesindir)
             {
-                if (filename.Contains("~"))
+                if (filefilter != string.Empty)
+                {
+                    if (filename.Contains(filefilter))
+                    {
+                        ProcessFile(filename, ref thefiles);
+                    }
+                }
+                else
                 {
                     ProcessFile(filename, ref thefiles);
                 }
@@ -48,7 +56,7 @@ namespace testFolderPoll
             IEnumerable<string> subdirectories = Directory.GetDirectories(path);
             foreach (var sub in subdirectories)
             {
-                ProcessDirectory(sub, ref thefiles);
+                ProcessDirectory(sub, ref thefiles,filefilter);
             }
 
         }
