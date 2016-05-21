@@ -16,7 +16,10 @@ namespace testFolderPoll
 
             ss.Start();
 
-            var filelist = Filer.GetFiles(tdbpath);
+            try
+            {
+                var filelist = Filer.GetFiles(tdbpath);
+           
 
             File.WriteAllLines(textfilepath, filelist);
 
@@ -48,9 +51,13 @@ namespace testFolderPoll
                 swriter.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + filelist.Count() + " files");
             }
 
-
+            }
+            catch (ArgumentNullException e)
+            {
+                Console.WriteLine(e);
+            }
             //Console.WriteLine(ss.Elapsed.TotalSeconds + " seconds for " + filelist.Count() + " files" + " filesize " + totalsize);
-            //Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }
